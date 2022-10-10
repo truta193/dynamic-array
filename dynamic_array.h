@@ -7,6 +7,8 @@
 #include <stddef.h>
 #include <stdio.h>
 
+#define DYN_ARRAY_EMPTY_START_SLOTS 2
+
 typedef struct dyn_array_header {
     size_t size; // In bytes
     size_t capacity; // In bytes
@@ -19,6 +21,7 @@ typedef struct dyn_array_header {
 #define dyn_array_get_capacity(array) dyn_array_get_header(array)->capacity
 #define dyn_array_push(array, value) (dyn_array_resize((void**)&array, sizeof((array)[0])), (array)[dyn_array_get_count(array)] = (value), dyn_array_get_header(array)->size += sizeof((array)[0]))
 #define dyn_array_pop(array) dyn_array_get_header(array)->size -= sizeof((array)[0])
+#define am_dyn_array_clear(array) (am_dyn_array_get_header(array)->size = 0)
 
 
 //void **array -> pointer to array
